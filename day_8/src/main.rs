@@ -16,7 +16,7 @@ fn part_1(output: &Vec<&str>) {
     for line in output {
         let words = line.split_whitespace().collect::<Vec<&str>>();
         for word in words {
-            match word.chars().collect::<Vec<char>>().len() {
+            match word.chars().count() {
                 2 => {
                     let count = counts.entry(1).or_insert(0);
                     *count += 1;
@@ -59,7 +59,7 @@ fn part_2(vec: &Vec<&str>) {
         let mut chars_0: Vec<char> = Vec::new();
         let words = input.split_whitespace().collect::<Vec<&str>>();
         for word in &words {
-            match word.chars().collect::<Vec<char>>().len() {
+            match word.chars().count() {
                 2 => {
                     chars_1 = word.chars().collect::<Vec<char>>();
                 },
@@ -79,8 +79,8 @@ fn part_2(vec: &Vec<&str>) {
         }
         let temp_vec_1 = words.clone();
         let temp_vec_2 = words.clone();
-        let six_nine_or_zero: Vec<&&str> = temp_vec_1.iter().filter(|word| word.chars().collect::<Vec<char>>().len() == 6).collect::<Vec<&&str>>();
-        let two_three_or_five: Vec<&&str> = temp_vec_2.iter().filter(|word| word.chars().collect::<Vec<char>>().len() == 5).collect::<Vec<&&str>>();
+        let six_nine_or_zero: Vec<&&str> = temp_vec_1.iter().filter(|word| word.chars().count() == 6).collect::<Vec<&&str>>();
+        let two_three_or_five: Vec<&&str> = temp_vec_2.iter().filter(|word| word.chars().count() == 5).collect::<Vec<&&str>>();
         let mut nine_or_zero: Vec<&&str> = six_nine_or_zero.clone();
         let mut two_or_five: Vec<&&str> = two_three_or_five.clone();
 
@@ -123,15 +123,15 @@ fn part_2(vec: &Vec<&str>) {
         let words = output.split_whitespace().collect::<Vec<&str>>();
         let mut nums = Vec::new();
         for word in &words {
-            if word.chars().collect::<Vec<char>>().len() == 2 {
+            if word.chars().count() == 2 {
                 nums.push("1");
-            } else if word.chars().collect::<Vec<char>>().len() == 3 {
+            } else if word.chars().count() == 3 {
                 nums.push("7");
-            } else if word.chars().collect::<Vec<char>>().len() == 4 {
+            } else if word.chars().count() == 4 {
                 nums.push("4");
-            } else if word.chars().collect::<Vec<char>>().len() == 7 {
+            } else if word.chars().count() == 7 {
                 nums.push("8");
-            } else if word.chars().collect::<Vec<char>>().len() == 6 {
+            } else if word.chars().count() == 6 {
                 if word.chars().collect::<Vec<char>>().iter().all(|&item|  chars_6.contains(&item)) {
                     nums.push("6");
                 } else if word.chars().collect::<Vec<char>>().iter().all(|&item|  chars_9.contains(&item)) {
@@ -139,7 +139,7 @@ fn part_2(vec: &Vec<&str>) {
                 } else if word.chars().collect::<Vec<char>>().iter().all(|&item|  chars_0.contains(&item)) {
                     nums.push("0");
                 }
-            } else if word.chars().collect::<Vec<char>>().len() == 5 {
+            } else if word.chars().count() == 5 {
                 if word.chars().collect::<Vec<char>>().iter().all(|&item|  chars_2.contains(&item)) {
                     nums.push("2");
                 } else if word.chars().collect::<Vec<char>>().iter().all(|&item|  chars_3.contains(&item)) {
