@@ -22,13 +22,13 @@ fn main() -> Result<(), std::io::Error>{
     let instructions = instructions.iter().map(|x| (x[0],x[1].parse().unwrap())).collect::<Vec<(&str,i32)>>();
     
 
-    part_1(grid_set, instructions);
+    part_2(grid_set, instructions);
 
     println!("time in milliseconds: {}", now.elapsed().as_millis());
     Ok(())
 }
 
-fn part_1(mut grid_set: HashSet<(i32,i32)>, instructions: Vec<(&str,i32)>) {
+fn part_2(mut grid_set: HashSet<(i32,i32)>, instructions: Vec<(&str,i32)>) {
     for instruction in instructions {
         let first_axis = instruction.0;
         let first_value = instruction.1;
