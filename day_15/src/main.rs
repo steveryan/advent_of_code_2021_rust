@@ -4,7 +4,7 @@ fn main() -> Result<(), std::io::Error>{
     let now = std::time::Instant::now();
     let file_location = "day_15.txt";
     let contents: String = std::fs::read_to_string(file_location)?;
-    let vec = contents.split("\n").collect::<Vec<&str>>();
+    let vec = contents.split('\n').collect::<Vec<&str>>();
     let grid = vec.iter().map(|x| x.chars().collect::<Vec<char>>()).collect::<Vec<Vec<char>>>();
     let grid = grid.iter().map(|x| x.iter().map(|y| y.to_digit(10).unwrap() as u64).collect::<Vec<u64>>()).collect::<Vec<Vec<u64>>>();
     
@@ -31,7 +31,7 @@ fn part_1(mut grid: Vec<Vec<u64>>) {
     run_path_search_iteratively((0,0), &mut grid, &mut explored, &mut queue, &mut distance, &mut queue_with_dist);
 }
 
-fn get_lowest_distance(distance: &mut HashMap<(usize,usize), u64>, queue: &mut HashSet<(usize,usize)>, queue_with_dist: &mut HashSet<(usize,usize)>) -> (usize,usize) {
+fn get_lowest_distance(distance: &mut HashMap<(usize,usize), u64>, _queue: &mut HashSet<(usize,usize)>, queue_with_dist: &mut HashSet<(usize,usize)>) -> (usize,usize) {
     let mut lowest_distance = std::u64::MAX;
     let mut lowest_coords = (0,0);
     for coords in queue_with_dist.iter() {
@@ -44,17 +44,16 @@ fn get_lowest_distance(distance: &mut HashMap<(usize,usize), u64>, queue: &mut H
     lowest_coords
 }
 
-fn path_search_from(mut coords: (usize,usize), mut grid: &mut Vec<Vec<u64>>, mut explored: &mut HashSet<(usize,usize)>, mut queue: &mut HashSet<(usize,usize)>, mut distance: &mut HashMap<(usize,usize), u64>, mut queue_with_dist: &mut HashSet<(usize,usize)>) -> (usize,usize) {
+fn path_search_from(mut coords: (usize,usize), mut grid: &mut Vec<Vec<u64>>, explored: &mut HashSet<(usize,usize)>, queue: &mut HashSet<(usize,usize)>, mut distance: &mut HashMap<(usize,usize), u64>, mut queue_with_dist: &mut HashSet<(usize,usize)>) -> (usize,usize) {
     update_distances(&mut coords, &mut grid, &mut distance, &mut queue_with_dist);
     explored.insert(coords);
     queue.remove(&coords);
     queue_with_dist.remove(&coords);
-    let next_to_explore = get_lowest_distance(distance, queue, queue_with_dist);
-    next_to_explore
+    get_lowest_distance(distance, queue, queue_with_dist)
 }
 
-fn run_path_search_iteratively(mut coords: (usize,usize), mut grid: &mut Vec<Vec<u64>>, mut explored: &mut HashSet<(usize,usize)>, mut queue: &mut HashSet<(usize,usize)>, mut distance: &mut HashMap<(usize,usize), u64>, mut queue_with_dist: &mut HashSet<(usize,usize)>){
-    let mut next_coords = coords.clone();
+fn run_path_search_iteratively(coords: (usize,usize), mut grid: &mut Vec<Vec<u64>>, mut explored: &mut HashSet<(usize,usize)>, mut queue: &mut HashSet<(usize,usize)>, mut distance: &mut HashMap<(usize,usize), u64>, mut queue_with_dist: &mut HashSet<(usize,usize)>){
+    let mut next_coords = coords;
     while next_coords != (grid.len()-1, grid[0].len()-1) {
         next_coords = path_search_from(next_coords, &mut grid, &mut explored, &mut queue, &mut distance, &mut queue_with_dist);
     }
